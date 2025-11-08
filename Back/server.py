@@ -1,12 +1,11 @@
-from fastapi import FastAPI, Request, BackgroundTasks
-from fastapi.responses import JSONResponse
+from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-import os, json, uuid, traceback
-from routers import login_controller
-from starlette.middleware.sessions import SessionMiddleware
+from routers import login_controller, auth_controller
 
-app = FastAPI(title="Konquest AI Server")
+app = FastAPI(title="CodeIQ Server")
+
 app.include_router(login_controller.router)
+app.include_router(auth_controller.router)
 
 app.add_middleware(
     CORSMiddleware,
@@ -23,3 +22,4 @@ async def root():
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run("server:app", host="0.0.0.0", port=8000, reload=True)
+
