@@ -6,7 +6,7 @@ SECRET_KEY = "your_secret_key_here"  # use os.getenv in production
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24  # 1 day
 
-pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
+pwd_context = CryptContext(schemes=["pbkdf2_sha256"], deprecated="auto")
 
 def hash_password(password: str):
     return pwd_context.hash(password)
