@@ -2,13 +2,11 @@ from fastapi import FastAPI, Request, BackgroundTasks
 from fastapi.responses import JSONResponse
 from fastapi.middleware.cors import CORSMiddleware
 import os, json, uuid, traceback
-#from Routers import csp_routes
+from routers import login_controller
 from starlette.middleware.sessions import SessionMiddleware
 
 app = FastAPI(title="Konquest AI Server")
-#app.include_router(csp_routes.router)
-#app.include_router(report_routes.router)
-#app.include_router(analyze_routes.router)
+app.include_router(login_controller.router)
 
 app.add_middleware(
     CORSMiddleware,
