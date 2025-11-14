@@ -12,7 +12,7 @@ client = AsyncIOMotorClient(MONGO_URI)
 db = client["codeiq_db"]
 questions = db["questions"]
 
-JUDGE0_URL = "https://api.judge0.com"
+JUDGE0_URL = "https://ce.judge0.com"
 
 
 # -------------------------
@@ -68,8 +68,11 @@ async def submit_code(question_id: str, payload: dict):
                 timeout=20
             )
 
-            if response.status_code != 201:
-                raise HTTPException(status_code=500, detail="Judge0 error")
+            if response.status_code not in (200, 201):
+                return JSONResponse({
+                    "judge0_status": response.status_code,
+                    "judge0_body": response.text
+                }, status_code=500)
 
             judge_out = response.json()
 
