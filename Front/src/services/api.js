@@ -18,3 +18,6 @@ export const loginUser = (data) => API.post("/auth/login", data);
 // Course APIs
 export const getAllCourses = () => API.get("/courses");
 export const getCourseSessions = (courseId) => API.get(`/courses/${courseId}/sessions`);
+
+// Session APIs
+export const getSessionById = (sessionId) => API.get(`/sessions/${sessionId}`);

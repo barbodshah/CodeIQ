@@ -381,20 +381,24 @@ export default function Dashboard() {
                             {sessions.map((session, index) => (
                               <div
                                 key={session._id}
+                                onClick={() => navigate(`/session/${session._id}`)}
                                 style={{
                                   backgroundColor: 'white',
                                   border: '1px solid #e5e7eb',
                                   borderRadius: '0.75rem',
                                   padding: '1rem',
-                                  transition: 'all 0.2s'
+                                  transition: 'all 0.2s',
+                                  cursor: 'pointer'
                                 }}
                                 onMouseEnter={(e) => {
                                   e.currentTarget.style.borderColor = '#a5b4fc';
                                   e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                                  e.currentTarget.style.transform = 'translateY(-2px)';
                                 }}
                                 onMouseLeave={(e) => {
                                   e.currentTarget.style.borderColor = '#e5e7eb';
                                   e.currentTarget.style.boxShadow = 'none';
+                                  e.currentTarget.style.transform = 'translateY(0)';
                                 }}
                               >
                                 <div style={{ display: 'flex', alignItems: 'flex-start' }}>

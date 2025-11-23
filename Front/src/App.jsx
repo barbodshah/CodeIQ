@@ -3,6 +3,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
 import Dashboard from "./pages/Dashboard";
+import Session from "./pages/Session";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -17,6 +18,15 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/session/:sessionId"
+          element={
+            <ProtectedRoute>
+              <Session />
             </ProtectedRoute>
           }
         />

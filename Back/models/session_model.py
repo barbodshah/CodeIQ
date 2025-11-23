@@ -5,6 +5,7 @@ class Section(BaseModel):
     title: str
     video_url: str
     question_id: str
+    description: str
 
 class Session(BaseModel):
     title: str
