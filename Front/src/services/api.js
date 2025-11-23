@@ -14,3 +14,7 @@ API.interceptors.request.use((config) => {
 
 export const signupUser = (data) => API.post("/auth/signup", data);
 export const loginUser = (data) => API.post("/auth/login", data);
+
+// Course APIs
+export const getAllCourses = () => API.get("/courses");
+export const getCourseSessions = (courseId) => API.get(`/courses/${courseId}/sessions`);
