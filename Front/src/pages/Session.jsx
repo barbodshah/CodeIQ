@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
-import { getSessionById } from "../services/api";
+import { getSessionById, getQuestionById, submitCode } from "../services/api";
 
 export default function Session() {
   const { sessionId } = useParams();
@@ -9,6 +9,11 @@ export default function Session() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [codeInputs, setCodeInputs] = useState({});
+  const [questions, setQuestions] = useState({});
+  const [loadingQuestions, setLoadingQuestions] = useState({});
+  const [submitResults, setSubmitResults] = useState({});
+  const [submitting, setSubmitting] = useState({});
+  const [submitErrors, setSubmitErrors] = useState({});
 
   useEffect(() => {
     async function fetchSession() {
@@ -21,10 +26,35 @@ export default function Session() {
           initialCodes[index] = "";
         });
         setCodeInputs(initialCodes);
+        
+        // Fetch questions for each section
+        if (response.data.sections) {
+          response.data.sections.forEach((section, index) => {
+            if (section.question_id) {
+              fetchQuestion(section.question_id, index);
+            }
+          });
+        }
       } catch (err) {
         setError(err.response?.data?.detail || err.message || "Failed to load session");
       } finally {
         setLoading(false);
+      }
+    }
+
+    async function fetchQuestion(questionId, sectionIndex) {
+      setLoadingQuestions(prev => ({ ...prev, [sectionIndex]: true }));
+      try {
+        const response = await getQuestionById(questionId);
+        setQuestions(prev => ({
+          ...prev,
+          [sectionIndex]: response.data
+        }));
+      } catch (err) {
+        console.error(`Failed to load question for section ${sectionIndex}:`, err);
+        // Don't show error to user, just log it
+      } finally {
+        setLoadingQuestions(prev => ({ ...prev, [sectionIndex]: false }));
       }
     }
 
@@ -40,11 +70,38 @@ export default function Session() {
     });
   };
 
-  const handleSubmit = (sectionIndex, questionId) => {
-    // Placeholder for submit functionality
-    console.log("Submitting code for question:", questionId);
-    console.log("Code:", codeInputs[sectionIndex]);
-    alert("Submit functionality will be implemented soon!");
+  const handleSubmit = async (sectionIndex, questionId) => {
+    const code = codeInputs[sectionIndex] || "";
+    
+    if (!code.trim()) {
+      alert("Please write some code before submitting!");
+      return;
+    }
+
+    if (!questionId) {
+      alert("Question ID is missing!");
+      return;
+    }
+
+    setSubmitting(prev => ({ ...prev, [sectionIndex]: true }));
+    setSubmitErrors(prev => ({ ...prev, [sectionIndex]: null }));
+    setSubmitResults(prev => ({ ...prev, [sectionIndex]: null }));
+
+    try {
+      // Language ID 71 is Python by default
+      const response = await submitCode(questionId, code, 71);
+      setSubmitResults(prev => ({
+        ...prev,
+        [sectionIndex]: response.data
+      }));
+    } catch (err) {
+      setSubmitErrors(prev => ({
+        ...prev,
+        [sectionIndex]: err.response?.data?.detail || err.message || "Failed to submit code"
+      }));
+    } finally {
+      setSubmitting(prev => ({ ...prev, [sectionIndex]: false }));
+    }
   };
 
   const extractAparatVideoId = (url) => {
@@ -319,6 +376,96 @@ export default function Session() {
                       </div>
                     )}
 
+                    {/* Question Description */}
+                    {section.question_id && (
+                      <div style={{ marginBottom: '1.5rem' }}>
+                        <h4 style={{
+                          fontSize: '1rem',
+                          fontWeight: '600',
+                          color: '#1f2937',
+                          marginBottom: '0.75rem'
+                        }}>
+                          Question:
+                        </h4>
+                        {loadingQuestions[index] ? (
+                          <div style={{
+                            padding: '1rem',
+                            backgroundColor: '#f9fafb',
+                            borderRadius: '0.5rem',
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '0.5rem'
+                          }}>
+                            <div style={{
+                              width: '1rem',
+                              height: '1rem',
+                              border: '2px solid #e5e7eb',
+                              borderTop: '2px solid #667eea',
+                              borderRadius: '50%',
+                              animation: 'spin 1s linear infinite'
+                            }}></div>
+                            <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>Loading question...</span>
+                          </div>
+                        ) : questions[index] ? (
+                          <div style={{
+                            padding: '1rem',
+                            backgroundColor: '#f0f9ff',
+                            borderRadius: '0.5rem',
+                            borderLeft: '4px solid #3b82f6',
+                            marginBottom: '0.5rem'
+                          }}>
+                            <p style={{
+                              color: '#1e40af',
+                              fontWeight: '600',
+                              fontSize: '0.875rem',
+                              margin: '0 0 0.5rem 0'
+                            }}>
+                              {questions[index].title}
+                            </p>
+                            <p style={{
+                              color: '#374151',
+                              lineHeight: '1.6',
+                              margin: 0,
+                              whiteSpace: 'pre-wrap'
+                            }}>
+                              {questions[index].description}
+                            </p>
+                            {questions[index].constraints && (
+                              <div style={{ marginTop: '0.75rem', paddingTop: '0.75rem', borderTop: '1px solid #bfdbfe' }}>
+                                <p style={{
+                                  color: '#1e40af',
+                                  fontWeight: '600',
+                                  fontSize: '0.875rem',
+                                  margin: '0 0 0.25rem 0'
+                                }}>
+                                  Constraints:
+                                </p>
+                                <p style={{
+                                  color: '#4b5563',
+                                  fontSize: '0.875rem',
+                                  margin: 0,
+                                  whiteSpace: 'pre-wrap'
+                                }}>
+                                  {questions[index].constraints}
+                                </p>
+                              </div>
+                            )}
+                          </div>
+                        ) : (
+                          <div style={{
+                            padding: '1rem',
+                            backgroundColor: '#fef2f2',
+                            borderRadius: '0.5rem',
+                            borderLeft: '4px solid #ef4444'
+                          }}>
+                            <p style={{ color: '#dc2626', fontSize: '0.875rem', margin: 0 }}>
+                              Question not found
+                            </p>
+                          </div>
+                        )}
+                      </div>
+                    )}
+
                     {/* Code Input */}
                     <div style={{ marginBottom: '1rem' }}>
                       <label style={{
@@ -361,32 +508,145 @@ export default function Session() {
                     {/* Submit Button */}
                     <button
                       onClick={() => handleSubmit(index, section.question_id)}
+                      disabled={submitting[index] || !section.question_id}
                       style={{
                         width: '100%',
                         padding: '0.75rem 1.5rem',
-                        background: 'linear-gradient(to right, #667eea, #764ba2)',
+                        background: submitting[index] || !section.question_id 
+                          ? '#9ca3af' 
+                          : 'linear-gradient(to right, #667eea, #764ba2)',
                         color: 'white',
                         borderRadius: '0.5rem',
                         border: 'none',
-                        cursor: 'pointer',
+                        cursor: submitting[index] || !section.question_id ? 'not-allowed' : 'pointer',
                         fontWeight: '600',
                         fontSize: '1rem',
                         transition: 'all 0.2s',
-                        boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)'
+                        boxShadow: submitting[index] || !section.question_id 
+                          ? 'none' 
+                          : '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                        opacity: submitting[index] || !section.question_id ? 0.6 : 1,
+                        display: 'flex',
+                        alignItems: 'center',
+                        justifyContent: 'center',
+                        gap: '0.5rem'
                       }}
                       onMouseEnter={(e) => {
-                        e.target.style.opacity = '0.9';
-                        e.target.style.transform = 'translateY(-1px)';
-                        e.target.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+                        if (!submitting[index] && section.question_id) {
+                          e.target.style.opacity = '0.9';
+                          e.target.style.transform = 'translateY(-1px)';
+                          e.target.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+                        }
                       }}
                       onMouseLeave={(e) => {
-                        e.target.style.opacity = '1';
-                        e.target.style.transform = 'translateY(0)';
-                        e.target.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                        if (!submitting[index] && section.question_id) {
+                          e.target.style.opacity = '1';
+                          e.target.style.transform = 'translateY(0)';
+                          e.target.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                        }
                       }}
                     >
-                      Submit Code
+                      {submitting[index] ? (
+                        <>
+                          <div style={{
+                            width: '1.25rem',
+                            height: '1.25rem',
+                            border: '2px solid white',
+                            borderTop: '2px solid transparent',
+                            borderRadius: '50%',
+                            animation: 'spin 1s linear infinite'
+                          }}></div>
+                          Judging...
+                        </>
+                      ) : (
+                        'Submit Code'
+                      )}
                     </button>
+
+                    {/* Submit Error */}
+                    {submitErrors[index] && (
+                      <div style={{
+                        marginTop: '1rem',
+                        padding: '1rem',
+                        backgroundColor: '#fef2f2',
+                        border: '1px solid #fecaca',
+                        borderRadius: '0.5rem'
+                      }}>
+                        <div style={{ display: 'flex', alignItems: 'flex-start', gap: '0.5rem' }}>
+                          <svg style={{ width: '1.25rem', height: '1.25rem', color: '#dc2626', flexShrink: 0, marginTop: '0.125rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                          </svg>
+                          <p style={{ color: '#dc2626', fontSize: '0.875rem', margin: 0 }}>
+                            {submitErrors[index]}
+                          </p>
+                        </div>
+                      </div>
+                    )}
+
+                    {/* Submit Results */}
+                    {submitResults[index] && (() => {
+                      const results = submitResults[index].results || [];
+                      const passedCount = results.filter(r => r.status?.id === 3).length;
+                      const totalCount = results.length;
+                      const isAccepted = submitResults[index].verdict === 'Accepted';
+                      
+                      return (
+                        <div style={{
+                          marginTop: '1rem',
+                          padding: '1.5rem',
+                          backgroundColor: isAccepted 
+                            ? '#f0fdf4' 
+                            : '#fef2f2',
+                          border: `2px solid ${isAccepted ? '#10b981' : '#ef4444'}`,
+                          borderRadius: '0.5rem'
+                        }}>
+                          <div style={{
+                            display: 'flex',
+                            alignItems: 'center',
+                            gap: '1rem'
+                          }}>
+                            <div style={{
+                              width: '3rem',
+                              height: '3rem',
+                              borderRadius: '50%',
+                              backgroundColor: isAccepted ? '#10b981' : '#ef4444',
+                              display: 'flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              flexShrink: 0
+                            }}>
+                              {isAccepted ? (
+                                <svg style={{ width: '1.75rem', height: '1.75rem', color: 'white' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M5 13l4 4L19 7" />
+                                </svg>
+                              ) : (
+                                <svg style={{ width: '1.75rem', height: '1.75rem', color: 'white' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M6 18L18 6M6 6l12 12" />
+                                </svg>
+                              )}
+                            </div>
+                            <div style={{ flex: 1 }}>
+                              <h4 style={{
+                                fontSize: '1.25rem',
+                                fontWeight: 'bold',
+                                color: isAccepted ? '#065f46' : '#991b1b',
+                                margin: '0 0 0.5rem 0'
+                              }}>
+                                {isAccepted ? '✓ Accepted' : '✗ Failed'}
+                              </h4>
+                              <p style={{
+                                fontSize: '1rem',
+                                color: isAccepted ? '#047857' : '#b91c1c',
+                                margin: 0,
+                                fontWeight: '500'
+                              }}>
+                                {passedCount} out of {totalCount} test cases passed
+                              </p>
+                            </div>
+                          </div>
+                        </div>
+                      );
+                    })()}
                   </div>
                 </div>
               );

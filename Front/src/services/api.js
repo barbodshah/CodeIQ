@@ -21,3 +21,13 @@ export const getCourseSessions = (courseId) => API.get(`/courses/${courseId}/ses
 
 // Session APIs
 export const getSessionById = (sessionId) => API.get(`/sessions/${sessionId}`);
+
+// Question APIs
+export const getQuestionById = (questionId) => API.get(`/judge/question/${questionId}`);
+
+// Submit APIs
+export const submitCode = (questionId, sourceCode, languageId = 71) => 
+  API.post(`/judge/submit/${questionId}`, {
+    source_code: sourceCode,
+    language_id: languageId
+  });
