@@ -2,7 +2,9 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Login from "./pages/Login";
 import Signup from "./pages/Signup";
+import Main from "./pages/Main";
 import Dashboard from "./pages/Dashboard";
+import Contact from "./pages/Contact";
 import Session from "./pages/Session";
 import ProtectedRoute from "./components/ProtectedRoute";
 
@@ -14,10 +16,28 @@ export default function App() {
         <Route path="/login" element={<Login />} />
 
         <Route
+          path="/main"
+          element={
+            <ProtectedRoute>
+              <Main />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
           path="/dashboard"
           element={
             <ProtectedRoute>
               <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/contact"
+          element={
+            <ProtectedRoute>
+              <Contact />
             </ProtectedRoute>
           }
         />

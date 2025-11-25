@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
-from routers import judge_controller, auth_controller, session_controller, course_controller
+from routers import judge_controller, auth_controller, session_controller, course_controller, contact_controller
 
 app = FastAPI(title="CodeIQ Server")
 
@@ -8,6 +8,7 @@ app.include_router(judge_controller.router)
 app.include_router(auth_controller.router)
 app.include_router(session_controller.router)
 app.include_router(course_controller.router)
+app.include_router(contact_controller.router)
 
 app.add_middleware(
     CORSMiddleware,

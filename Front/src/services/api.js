@@ -31,3 +31,6 @@ export const submitCode = (questionId, sourceCode, languageId = 71) =>
     source_code: sourceCode,
     language_id: languageId
   });
+
+// Contact APIs
+export const sendContactEmail = (data) => API.post("/contact/send", data);
