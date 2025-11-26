@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import { getSessionById, getQuestionById, submitCode } from "../services/api";
+import Header from "../components/Header";
 
 export default function Session() {
   const { sessionId } = useParams();
@@ -229,62 +230,7 @@ export default function Session() {
 
   return (
     <div style={{ minHeight: '100vh', backgroundColor: '#f9fafb' }}>
-      {/* Header */}
-      <header style={{
-        backgroundColor: 'white',
-        boxShadow: '0 1px 3px 0 rgba(0, 0, 0, 0.1)',
-        borderBottom: '1px solid #e5e7eb',
-        position: 'sticky',
-        top: 0,
-        zIndex: 10
-      }}>
-        <div style={{
-          maxWidth: '1280px',
-          margin: '0 auto',
-          padding: '1rem 1.5rem',
-          display: 'flex',
-          justifyContent: 'space-between',
-          alignItems: 'center'
-        }}>
-          <div style={{ display: 'flex', alignItems: 'center', gap: '1rem' }}>
-            <button
-              onClick={() => navigate("/dashboard")}
-              style={{
-                padding: '0.5rem',
-                backgroundColor: 'transparent',
-                border: 'none',
-                cursor: 'pointer',
-                borderRadius: '0.5rem',
-                display: 'flex',
-                alignItems: 'center',
-                color: '#4b5563'
-              }}
-              onMouseEnter={(e) => {
-                e.target.style.backgroundColor = '#f3f4f6';
-                e.target.style.color = '#111827';
-              }}
-              onMouseLeave={(e) => {
-                e.target.style.backgroundColor = 'transparent';
-                e.target.style.color = '#4b5563';
-              }}
-            >
-              <svg style={{ width: '1.5rem', height: '1.5rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-              </svg>
-            </button>
-            <h1 style={{
-              fontSize: '1.875rem',
-              fontWeight: 'bold',
-              background: 'linear-gradient(to right, #667eea, #764ba2)',
-              WebkitBackgroundClip: 'text',
-              WebkitTextFillColor: 'transparent',
-              margin: 0
-            }}>
-              CodeIQ
-            </h1>
-          </div>
-        </div>
-      </header>
+      <Header />
 
       {/* Main Content */}
       <main style={{
