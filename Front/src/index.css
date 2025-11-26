@@ -36,6 +36,21 @@ input[type="url"] {
   text-align: left !important;
 }
 
+/* Better spacing for RTL layout */
+[dir="rtl"] svg + span,
+[dir="rtl"] svg + * {
+  margin-right: 0.5rem;
+}
+
+[dir="rtl"] .flex svg:first-child {
+  margin-left: 0.5rem;
+}
+
+/* Ensure proper gap in flex containers for RTL */
+[dir="rtl"] .flex {
+  gap: 0.5rem;
+}
+
 /* Utility Classes */
 .line-clamp-1 {
   display: -webkit-box;

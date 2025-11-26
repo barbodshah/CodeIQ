@@ -339,7 +339,7 @@ export default function AdminDashboard() {
                     borderTop: '3px solid #667eea',
                     borderRadius: '50%',
                     animation: 'spin 1s linear infinite',
-                    marginRight: '1rem'
+                    marginLeft: '1rem'
                   }}></div>
                   <p style={{ color: '#6b7280', margin: 0 }}>در حال بارگذاری کاربران...</p>
                 </div>
@@ -616,7 +616,7 @@ export default function AdminDashboard() {
                     borderTop: '3px solid #667eea',
                     borderRadius: '50%',
                     animation: 'spin 1s linear infinite',
-                    marginRight: '1rem'
+                    marginLeft: '1rem'
                   }}></div>
                   <p style={{ color: '#6b7280', margin: 0 }}>در حال بارگذاری دوره‌ها...</p>
                 </div>

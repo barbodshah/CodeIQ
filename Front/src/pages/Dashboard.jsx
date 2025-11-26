@@ -260,7 +260,7 @@ export default function Dashboard() {
                         </p>
                       </div>
                       <div style={{
-                        marginRight: '1rem',
+                        marginLeft: '1rem',
                         transition: 'transform 0.3s',
                         transform: isSelected ? 'rotate(180deg)' : 'rotate(0deg)'
                       }}>
@@ -285,13 +285,13 @@ export default function Dashboard() {
                                 width: '3rem',
                                 backgroundColor: '#667eea',
                                 borderRadius: '9999px',
-                                marginRight: '0.75rem'
+                                marginLeft: '0.75rem'
                               }}></div>
                               <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>جلسات</h4>
                             </div>
                             
                             {loadingSessions ? (
-                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 0' }}>
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 0', gap: '0.75rem' }}>
                                 <div style={{
                                   width: '1.5rem',
                                   height: '1.5rem',
@@ -299,7 +299,7 @@ export default function Dashboard() {
                                   borderTop: '2px solid #667eea',
                                   borderRadius: '50%',
                                   animation: 'spin 1s linear infinite',
-                                  marginRight: '0.75rem'
+                                  flexShrink: 0
                                 }}></div>
                                 <p style={{ color: '#6b7280', margin: 0 }}>در حال بارگذاری جلسات...</p>
                               </div>
@@ -359,7 +359,7 @@ export default function Dashboard() {
                                         color: 'white',
                                         fontSize: '0.875rem',
                                         fontWeight: 'bold',
-                                        marginRight: '0.75rem'
+                                        marginLeft: '1rem'
                                       }}>
                                         {index + 1}
                                       </div>
@@ -387,8 +387,8 @@ export default function Dashboard() {
                                           </p>
                                         )}
                                         {session.sections && session.sections.length > 0 && (
-                                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.75rem', color: '#6b7280' }}>
-                                            <svg style={{ width: '1rem', height: '1rem', marginRight: '0.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.75rem', color: '#6b7280', gap: '0.5rem' }}>
+                                            <svg style={{ width: '1rem', height: '1rem', flexShrink: 0 }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                             </svg>
                                             <span>{session.sections.length} بخش</span>
