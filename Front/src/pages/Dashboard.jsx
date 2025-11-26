@@ -19,7 +19,7 @@ export default function Dashboard() {
         const response = await getAllCourses();
         setCourses(response.data);
       } catch (err) {
-        setError(err.response?.data?.detail || err.message || "Failed to load courses");
+        setError(err.response?.data?.detail || err.message || "بارگذاری دوره‌ها با خطا مواجه شد");
       } finally {
         setLoading(false);
       }
@@ -43,7 +43,7 @@ export default function Dashboard() {
       const response = await getCourseSessions(courseId);
       setSessions(response.data || []);
     } catch (err) {
-      setSessionsError(err.response?.data?.detail || err.message || "Failed to load sessions");
+      setSessionsError(err.response?.data?.detail || err.message || "بارگذاری جلسات با خطا مواجه شد");
       setSessions([]);
     } finally {
       setLoadingSessions(false);
@@ -71,7 +71,7 @@ export default function Dashboard() {
             animation: 'spin 1s linear infinite',
             marginBottom: '1rem'
           }}></div>
-          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>Loading courses...</p>
+          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>در حال بارگذاری دوره‌ها...</p>
         </div>
       </div>
     );
@@ -110,7 +110,7 @@ export default function Dashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
               </svg>
             </div>
-            <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>Error</h1>
+            <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>خطا</h1>
             <p style={{ color: '#dc2626', marginBottom: '1.5rem' }}>{error}</p>
             <button
               onClick={() => window.location.reload()}
@@ -128,7 +128,7 @@ export default function Dashboard() {
               onMouseEnter={(e) => e.target.style.backgroundColor = '#5568d3'}
               onMouseLeave={(e) => e.target.style.backgroundColor = '#667eea'}
             >
-              Retry
+              تلاش مجدد
             </button>
           </div>
         </div>
@@ -160,9 +160,9 @@ export default function Dashboard() {
             marginBottom: '0.5rem',
             margin: '0 0 0.5rem 0'
           }}>
-            Available Courses
+            دوره‌های موجود
           </h2>
-          <p style={{ color: '#4b5563', margin: 0 }}>Explore and select a course to view its sessions</p>
+          <p style={{ color: '#4b5563', margin: 0 }}>دوره‌ها را بررسی کنید و برای مشاهده جلسات، یکی را انتخاب کنید</p>
         </div>
 
         {courses.length === 0 ? (
@@ -187,8 +187,8 @@ export default function Dashboard() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253" />
               </svg>
             </div>
-            <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem' }}>No Courses Available</h3>
-            <p style={{ color: '#6b7280', margin: 0 }}>Check back later for new courses</p>
+            <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1f2937', marginBottom: '0.5rem' }}>دوره‌ای موجود نیست</h3>
+            <p style={{ color: '#6b7280', margin: 0 }}>بعداً برای دوره‌های جدید بررسی کنید</p>
           </div>
         ) : (
           <div style={{
@@ -260,7 +260,7 @@ export default function Dashboard() {
                         </p>
                       </div>
                       <div style={{
-                        marginLeft: '1rem',
+                        marginRight: '1rem',
                         transition: 'transform 0.3s',
                         transform: isSelected ? 'rotate(180deg)' : 'rotate(0deg)'
                       }}>
@@ -287,7 +287,7 @@ export default function Dashboard() {
                                 borderRadius: '9999px',
                                 marginRight: '0.75rem'
                               }}></div>
-                              <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>Sessions</h4>
+                              <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>جلسات</h4>
                             </div>
                             
                             {loadingSessions ? (
@@ -301,7 +301,7 @@ export default function Dashboard() {
                                   animation: 'spin 1s linear infinite',
                                   marginRight: '0.75rem'
                                 }}></div>
-                                <p style={{ color: '#6b7280', margin: 0 }}>Loading sessions...</p>
+                                <p style={{ color: '#6b7280', margin: 0 }}>در حال بارگذاری جلسات...</p>
                               </div>
                             ) : sessionsError ? (
                               <div style={{
@@ -319,7 +319,7 @@ export default function Dashboard() {
                                 padding: '1rem',
                                 textAlign: 'center'
                               }}>
-                                <p style={{ color: '#6b7280', fontSize: '0.875rem', margin: 0 }}>No sessions available for this course</p>
+                                <p style={{ color: '#6b7280', fontSize: '0.875rem', margin: 0 }}>برای این دوره جلسه‌ای موجود نیست</p>
                               </div>
                             ) : (
                               <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
@@ -391,7 +391,7 @@ export default function Dashboard() {
                                             <svg style={{ width: '1rem', height: '1rem', marginRight: '0.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                                             </svg>
-                                            <span>{session.sections.length} section{session.sections.length !== 1 ? 's' : ''}</span>
+                                            <span>{session.sections.length} بخش</span>
                                           </div>
                                         )}
                                       </div>
@@ -429,14 +429,14 @@ export default function Dashboard() {
                               color: '#92400e',
                               marginBottom: '0.5rem'
                             }}>
-                              Course Not Purchased
+                              دوره خریداری نشده
                             </h4>
                             <p style={{
                               color: '#78350f',
                               fontSize: '0.875rem',
                               marginBottom: '1.5rem'
                             }}>
-                              You need to purchase this course to access its sessions.
+                              برای دسترسی به جلسات این دوره، باید آن را خریداری کنید.
                             </p>
                             <button
                               onClick={(e) => {
@@ -466,7 +466,7 @@ export default function Dashboard() {
                                 e.target.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
                               }}
                             >
-                              Purchase Course
+                              خرید دوره
                             </button>
                           </div>
                         )}

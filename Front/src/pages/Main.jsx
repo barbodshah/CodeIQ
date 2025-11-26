@@ -26,7 +26,7 @@ export default function Main() {
             marginBottom: '1.5rem',
             textAlign: 'center'
           }}>
-            Welcome to CodeIQ
+            به CodeIQ خوش آمدید
           </h1>
           
           <div style={{
@@ -37,13 +37,13 @@ export default function Main() {
             fontSize: '1.125rem'
           }}>
             <p style={{ marginBottom: '1.5rem' }}>
-              CodeIQ is a comprehensive learning platform designed to help you master programming and problem-solving skills. 
-              Whether you're a beginner or an experienced developer, our platform offers structured courses and interactive 
-              coding sessions to enhance your abilities.
+              CodeIQ یک پلتفرم یادگیری جامع است که برای کمک به تسلط شما بر مهارت‌های برنامه‌نویسی و حل مسئله طراحی شده است. 
+              چه مبتدی باشید و چه یک توسعه‌دهنده با تجربه، پلتفرم ما دوره‌های ساختاریافته و جلسات کدنویسی تعاملی را برای 
+              بهبود توانایی‌های شما ارائه می‌دهد.
             </p>
             
             <p style={{ marginBottom: '1.5rem' }}>
-              Our platform provides a unique learning experience where you can:
+              پلتفرم ما یک تجربه یادگیری منحصر به فرد ارائه می‌دهد که می‌توانید:
             </p>
             
             <ul style={{
@@ -53,74 +53,74 @@ export default function Main() {
             }}>
               <li style={{
                 marginBottom: '1rem',
-                paddingLeft: '2rem',
+                paddingRight: '2rem',
                 position: 'relative'
               }}>
                 <span style={{
                   position: 'absolute',
-                  left: 0,
+                  right: 0,
                   top: '0.5rem',
                   width: '0.5rem',
                   height: '0.5rem',
                   borderRadius: '50%',
                   background: 'linear-gradient(to right, #667eea, #764ba2)'
                 }}></span>
-                <strong style={{ color: '#1f2937' }}>Interactive Coding Sessions:</strong> Practice coding in real-time with 
-                hands-on exercises and challenges that adapt to your skill level.
+                <strong style={{ color: '#1f2937' }}>جلسات کدنویسی تعاملی:</strong> با تمرین‌ها و چالش‌های عملی که با سطح مهارت شما سازگار است، 
+                به صورت بلادرنگ کدنویسی تمرین کنید.
               </li>
               
               <li style={{
                 marginBottom: '1rem',
-                paddingLeft: '2rem',
+                paddingRight: '2rem',
                 position: 'relative'
               }}>
                 <span style={{
                   position: 'absolute',
-                  left: 0,
+                  right: 0,
                   top: '0.5rem',
                   width: '0.5rem',
                   height: '0.5rem',
                   borderRadius: '50%',
                   background: 'linear-gradient(to right, #667eea, #764ba2)'
                 }}></span>
-                <strong style={{ color: '#1f2937' }}>Structured Courses:</strong> Follow carefully designed learning paths 
-                that guide you from fundamentals to advanced topics.
+                <strong style={{ color: '#1f2937' }}>دوره‌های ساختاریافته:</strong> مسیرهای یادگیری با دقت طراحی شده را دنبال کنید 
+                که شما را از مبانی تا موضوعات پیشرفته راهنمایی می‌کند.
               </li>
               
               <li style={{
                 marginBottom: '1rem',
-                paddingLeft: '2rem',
+                paddingRight: '2rem',
                 position: 'relative'
               }}>
                 <span style={{
                   position: 'absolute',
-                  left: 0,
+                  right: 0,
                   top: '0.5rem',
                   width: '0.5rem',
                   height: '0.5rem',
                   borderRadius: '50%',
                   background: 'linear-gradient(to right, #667eea, #764ba2)'
                 }}></span>
-                <strong style={{ color: '#1f2937' }}>Progress Tracking:</strong> Monitor your learning journey and see your 
-                improvement over time with detailed analytics and progress reports.
+                <strong style={{ color: '#1f2937' }}>ردیابی پیشرفت:</strong> سفر یادگیری خود را نظارت کنید و پیشرفت خود را 
+                در طول زمان با تجزیه و تحلیل‌های دقیق و گزارش‌های پیشرفت مشاهده کنید.
               </li>
               
               <li style={{
                 marginBottom: '1rem',
-                paddingLeft: '2rem',
+                paddingRight: '2rem',
                 position: 'relative'
               }}>
                 <span style={{
                   position: 'absolute',
-                  left: 0,
+                  right: 0,
                   top: '0.5rem',
                   width: '0.5rem',
                   height: '0.5rem',
                   borderRadius: '50%',
                   background: 'linear-gradient(to right, #667eea, #764ba2)'
                 }}></span>
-                <strong style={{ color: '#1f2937' }}>Expert Guidance:</strong> Learn from industry professionals and get 
-                feedback on your code to improve your programming skills.
+                <strong style={{ color: '#1f2937' }}>راهنمایی متخصص:</strong> از متخصصان صنعت بیاموزید و 
+                بازخورد کد خود را دریافت کنید تا مهارت‌های برنامه‌نویسی خود را بهبود بخشید.
               </li>
             </ul>
             
@@ -129,11 +129,11 @@ export default function Main() {
               padding: '1.5rem',
               backgroundColor: '#eef2ff',
               borderRadius: '0.75rem',
-              borderLeft: '4px solid #667eea',
+              borderRight: '4px solid #667eea',
               color: '#1e40af',
               fontWeight: '500'
             }}>
-              Ready to start your coding journey? Visit the Dashboard to explore available courses and begin your first session!
+              آماده شروع سفر کدنویسی خود هستید؟ به داشبورد بروید تا دوره‌های موجود را بررسی کنید و اولین جلسه خود را شروع کنید!
             </p>
           </div>
         </div>

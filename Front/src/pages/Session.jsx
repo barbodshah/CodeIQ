@@ -37,7 +37,7 @@ export default function Session() {
           });
         }
       } catch (err) {
-        setError(err.response?.data?.detail || err.message || "Failed to load session");
+        setError(err.response?.data?.detail || err.message || "بارگذاری جلسه با خطا مواجه شد");
       } finally {
         setLoading(false);
       }
@@ -75,12 +75,12 @@ export default function Session() {
     const code = codeInputs[sectionIndex] || "";
     
     if (!code.trim()) {
-      alert("Please write some code before submitting!");
+      alert("لطفاً قبل از ارسال، کدی بنویسید!");
       return;
     }
 
     if (!questionId) {
-      alert("Question ID is missing!");
+      alert("شناسه سوال موجود نیست!");
       return;
     }
 
@@ -98,7 +98,7 @@ export default function Session() {
     } catch (err) {
       setSubmitErrors(prev => ({
         ...prev,
-        [sectionIndex]: err.response?.data?.detail || err.message || "Failed to submit code"
+        [sectionIndex]: err.response?.data?.detail || err.message || "ارسال کد با خطا مواجه شد"
       }));
     } finally {
       setSubmitting(prev => ({ ...prev, [sectionIndex]: false }));
@@ -140,7 +140,7 @@ export default function Session() {
             animation: 'spin 1s linear infinite',
             marginBottom: '1rem'
           }}></div>
-          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>Loading session...</p>
+          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>در حال بارگذاری جلسه...</p>
         </div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -180,7 +180,7 @@ export default function Session() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>Error</h1>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>خطا</h1>
           <p style={{ color: '#dc2626', marginBottom: '1.5rem' }}>{error}</p>
           {error.includes("purchase") || error.includes("need to purchase") ? (
             <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
@@ -198,7 +198,7 @@ export default function Session() {
                 onMouseEnter={(e) => e.target.style.backgroundColor = '#d1d5db'}
                 onMouseLeave={(e) => e.target.style.backgroundColor = '#e5e7eb'}
               >
-                Back to Dashboard
+                بازگشت به داشبورد
               </button>
             </div>
           ) : (
@@ -319,7 +319,7 @@ export default function Session() {
                         textAlign: 'center',
                         color: '#6b7280'
                       }}>
-                        Video URL not available or invalid
+                        آدرس ویدیو موجود نیست یا نامعتبر است
                       </div>
                     )}
 
@@ -330,7 +330,7 @@ export default function Session() {
                         padding: '1rem',
                         backgroundColor: '#f9fafb',
                         borderRadius: '0.5rem',
-                        borderLeft: '4px solid #667eea'
+                            borderRight: '4px solid #667eea'
                       }}>
                         <p style={{
                           color: '#374151',
@@ -352,7 +352,7 @@ export default function Session() {
                           color: '#1f2937',
                           marginBottom: '0.75rem'
                         }}>
-                          Question:
+                          سوال:
                         </h4>
                         {loadingQuestions[index] ? (
                           <div style={{
@@ -371,14 +371,14 @@ export default function Session() {
                               borderRadius: '50%',
                               animation: 'spin 1s linear infinite'
                             }}></div>
-                            <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>Loading question...</span>
+                            <span style={{ color: '#6b7280', fontSize: '0.875rem' }}>در حال بارگذاری سوال...</span>
                           </div>
                         ) : questions[index] ? (
                           <div style={{
                             padding: '1rem',
                             backgroundColor: '#f0f9ff',
                             borderRadius: '0.5rem',
-                            borderLeft: '4px solid #3b82f6',
+                            borderRight: '4px solid #3b82f6',
                             marginBottom: '0.5rem'
                           }}>
                             <p style={{
@@ -405,7 +405,7 @@ export default function Session() {
                                   fontSize: '0.875rem',
                                   margin: '0 0 0.25rem 0'
                                 }}>
-                                  Constraints:
+                                  محدودیت‌ها:
                                 </p>
                                 <p style={{
                                   color: '#4b5563',
@@ -423,10 +423,10 @@ export default function Session() {
                             padding: '1rem',
                             backgroundColor: '#fef2f2',
                             borderRadius: '0.5rem',
-                            borderLeft: '4px solid #ef4444'
+                            borderRight: '4px solid #ef4444'
                           }}>
                             <p style={{ color: '#dc2626', fontSize: '0.875rem', margin: 0 }}>
-                              Question not found
+                              سوال یافت نشد
                             </p>
                           </div>
                         )}
@@ -442,12 +442,12 @@ export default function Session() {
                         color: '#374151',
                         marginBottom: '0.5rem'
                       }}>
-                        Write your code here:
+                        کد خود را اینجا بنویسید:
                       </label>
                       <textarea
                         value={codeInputs[index] || ""}
                         onChange={(e) => handleCodeChange(index, e.target.value)}
-                        placeholder="Enter your code..."
+                        placeholder="کد خود را وارد کنید..."
                         style={{
                           width: '100%',
                           minHeight: '200px',
@@ -459,7 +459,9 @@ export default function Session() {
                           lineHeight: '1.5',
                           resize: 'vertical',
                           outline: 'none',
-                          transition: 'border-color 0.2s'
+                          transition: 'border-color 0.2s',
+                          direction: 'ltr',
+                          textAlign: 'left'
                         }}
                         onFocus={(e) => {
                           e.target.style.borderColor = '#667eea';
@@ -523,10 +525,10 @@ export default function Session() {
                             borderRadius: '50%',
                             animation: 'spin 1s linear infinite'
                           }}></div>
-                          Judging...
+                          در حال بررسی...
                         </>
                       ) : (
-                        'Submit Code'
+                        'ارسال کد'
                       )}
                     </button>
 
@@ -599,7 +601,7 @@ export default function Session() {
                                 color: isAccepted ? '#065f46' : '#991b1b',
                                 margin: '0 0 0.5rem 0'
                               }}>
-                                {isAccepted ? '✓ Accepted' : '✗ Failed'}
+                                {isAccepted ? '✓ پذیرفته شد' : '✗ رد شد'}
                               </h4>
                               <p style={{
                                 fontSize: '1rem',
@@ -607,7 +609,7 @@ export default function Session() {
                                 margin: 0,
                                 fontWeight: '500'
                               }}>
-                                {passedCount} out of {totalCount} test cases passed
+                                {passedCount} از {totalCount} تست موفق شد
                               </p>
                             </div>
                           </div>
@@ -627,7 +629,7 @@ export default function Session() {
             padding: '3rem',
             textAlign: 'center'
           }}>
-            <p style={{ color: '#6b7280', fontSize: '1.125rem' }}>No sections available for this session</p>
+            <p style={{ color: '#6b7280', fontSize: '1.125rem' }}>برای این جلسه بخشی موجود نیست</p>
           </div>
         )}
       </main>

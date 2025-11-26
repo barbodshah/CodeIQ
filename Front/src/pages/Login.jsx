@@ -34,7 +34,7 @@ export default function Login() {
         navigate("/main");
       }
     } catch (err) {
-      setError(err.response?.data?.detail || "Invalid email or password");
+      setError(err.response?.data?.detail || "ایمیل یا رمز عبور نامعتبر است");
     } finally {
       setLoading(false);
     }
@@ -56,7 +56,7 @@ export default function Login() {
             CodeIQ
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-            Welcome back! Please login to your account
+            خوش آمدید! لطفاً وارد حساب کاربری خود شوید
           </p>
         </div>
 
@@ -68,18 +68,18 @@ export default function Login() {
           padding: '2rem'
         }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1.5rem', textAlign: 'center' }}>
-            Sign In
+            ورود
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
-                Email Address
+                آدرس ایمیل
               </label>
               <input
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="ایمیل خود را وارد کنید"
                 value={form.email}
                 onChange={handleChange}
                 style={{
@@ -89,7 +89,9 @@ export default function Login() {
                   borderRadius: '0.5rem',
                   fontSize: '1rem',
                   outline: 'none',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  direction: 'ltr',
+                  textAlign: 'left'
                 }}
                 onFocus={(e) => {
                   e.target.style.borderColor = '#667eea';
@@ -105,12 +107,12 @@ export default function Login() {
 
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
-                Password
+                رمز عبور
               </label>
               <input
                 type="password"
                 name="password"
-                placeholder="Enter your password"
+                placeholder="رمز عبور خود را وارد کنید"
                 value={form.password}
                 onChange={handleChange}
                 style={{
@@ -120,7 +122,9 @@ export default function Login() {
                   borderRadius: '0.5rem',
                   fontSize: '1rem',
                   outline: 'none',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  direction: 'ltr',
+                  textAlign: 'left'
                 }}
                 onFocus={(e) => {
                   e.target.style.borderColor = '#667eea';
@@ -194,17 +198,17 @@ export default function Login() {
                     borderRadius: '50%',
                     animation: 'spin 1s linear infinite'
                   }}></div>
-                  Signing in...
+                  در حال ورود...
                 </>
               ) : (
-                "Sign In"
+                "ورود"
               )}
             </button>
           </form>
 
           <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
             <p style={{ fontSize: '0.875rem', color: '#4b5563', margin: 0 }}>
-              Don't have an account?{' '}
+              حساب کاربری ندارید؟{' '}
               <button
                 type="button"
                 onClick={() => navigate("/signup")}
@@ -220,7 +224,7 @@ export default function Login() {
                 onMouseEnter={(e) => e.target.style.color = '#5568d3'}
                 onMouseLeave={(e) => e.target.style.color = '#667eea'}
               >
-                Sign Up
+                ثبت نام
               </button>
             </p>
           </div>
@@ -228,7 +232,7 @@ export default function Login() {
 
         {/* Footer */}
         <p style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.875rem', marginTop: '1.5rem', margin: 0 }}>
-          © 2024 CodeIQ. All rights reserved.
+          © ۱۴۰۳ CodeIQ. تمامی حقوق محفوظ است.
         </p>
       </div>
 

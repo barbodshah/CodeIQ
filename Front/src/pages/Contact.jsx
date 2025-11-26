@@ -34,7 +34,7 @@ export default function Contact() {
       setSuccess(true);
       setForm({ name: "", email: "", subject: "", message: "" });
     } catch (err) {
-      setError(err.response?.data?.detail || "Failed to send message. Please try again.");
+      setError(err.response?.data?.detail || "ارسال پیام با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
     } finally {
       setLoading(false);
     }
@@ -66,7 +66,7 @@ export default function Contact() {
             marginBottom: '1rem',
             textAlign: 'center'
           }}>
-            Contact Us
+            تماس با ما
           </h1>
           
           <p style={{
@@ -75,7 +75,7 @@ export default function Contact() {
             fontSize: '1.125rem',
             marginBottom: '2.5rem'
           }}>
-            Have a question or need help? We're here to assist you.
+            سوالی دارید یا به کمک نیاز دارید؟ ما اینجا هستیم تا به شما کمک کنیم.
           </p>
 
           {/* Phone Number Display */}
@@ -104,7 +104,7 @@ export default function Contact() {
                 textTransform: 'uppercase',
                 letterSpacing: '0.05em'
               }}>
-                Phone Number
+                شماره تلفن
               </span>
             </div>
             <a
@@ -134,12 +134,12 @@ export default function Contact() {
                 color: '#374151',
                 marginBottom: '0.5rem'
               }}>
-                Name *
+                نام *
               </label>
               <input
                 type="text"
                 name="name"
-                placeholder="Your full name"
+                placeholder="نام و نام خانوادگی شما"
                 value={form.name}
                 onChange={handleChange}
                 required
@@ -172,12 +172,12 @@ export default function Contact() {
                 color: '#374151',
                 marginBottom: '0.5rem'
               }}>
-                Email *
+                ایمیل *
               </label>
               <input
                 type="email"
                 name="email"
-                placeholder="your.email@example.com"
+                placeholder="ایمیل شما"
                 value={form.email}
                 onChange={handleChange}
                 required
@@ -189,7 +189,9 @@ export default function Contact() {
                   fontSize: '1rem',
                   outline: 'none',
                   transition: 'all 0.2s',
-                  boxSizing: 'border-box'
+                  boxSizing: 'border-box',
+                  direction: 'ltr',
+                  textAlign: 'left'
                 }}
                 onFocus={(e) => {
                   e.target.style.borderColor = '#667eea';
@@ -210,12 +212,12 @@ export default function Contact() {
                 color: '#374151',
                 marginBottom: '0.5rem'
               }}>
-                Subject *
+                موضوع *
               </label>
               <input
                 type="text"
                 name="subject"
-                placeholder="What is this regarding?"
+                placeholder="موضوع چیست؟"
                 value={form.subject}
                 onChange={handleChange}
                 required
@@ -248,11 +250,11 @@ export default function Contact() {
                 color: '#374151',
                 marginBottom: '0.5rem'
               }}>
-                Message *
+                پیام *
               </label>
               <textarea
                 name="message"
-                placeholder="Tell us how we can help you..."
+                placeholder="به ما بگویید چگونه می‌توانیم به شما کمک کنیم..."
                 value={form.message}
                 onChange={handleChange}
                 required
@@ -311,7 +313,7 @@ export default function Contact() {
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
                 <p style={{ color: '#16a34a', fontSize: '0.875rem', margin: 0 }}>
-                  Thank you! Your message has been sent successfully. We'll get back to you soon.
+                  متشکریم! پیام شما با موفقیت ارسال شد. به زودی با شما تماس خواهیم گرفت.
                 </p>
               </div>
             )}
@@ -359,14 +361,14 @@ export default function Contact() {
                     borderRadius: '50%',
                     animation: 'spin 1s linear infinite'
                   }}></div>
-                  Sending...
+                  در حال ارسال...
                 </>
               ) : (
                 <>
                   <svg style={{ width: '1.25rem', height: '1.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
                   </svg>
-                  Send Message
+                  ارسال پیام
                 </>
               )}
             </button>

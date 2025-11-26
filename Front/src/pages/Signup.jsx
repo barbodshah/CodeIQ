@@ -26,7 +26,7 @@ export default function Signup() {
       await signupUser(form);
       navigate("/login");
     } catch (err) {
-      setError(err.response?.data?.detail || "Signup failed. Please try again.");
+      setError(err.response?.data?.detail || "ثبت نام با خطا مواجه شد. لطفاً دوباره تلاش کنید.");
     } finally {
       setLoading(false);
     }
@@ -47,7 +47,7 @@ export default function Signup() {
             CodeIQ
           </h1>
           <p style={{ color: 'rgba(255, 255, 255, 0.9)' }}>
-            Create your account and start learning
+            حساب کاربری خود را ایجاد کنید و یادگیری را شروع کنید
           </p>
         </div>
 
@@ -58,18 +58,18 @@ export default function Signup() {
           padding: '2rem'
         }}>
           <h2 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '1.5rem', textAlign: 'center' }}>
-            Create Account
+            ایجاد حساب کاربری
           </h2>
 
           <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
-                Username
+                نام کاربری
               </label>
               <input
                 type="text"
                 name="username"
-                placeholder="Choose a username"
+                placeholder="یک نام کاربری انتخاب کنید"
                 value={form.username}
                 onChange={handleChange}
                 style={{
@@ -95,12 +95,12 @@ export default function Signup() {
 
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
-                Email Address
+                آدرس ایمیل
               </label>
               <input
                 type="email"
                 name="email"
-                placeholder="Enter your email"
+                placeholder="ایمیل خود را وارد کنید"
                 value={form.email}
                 onChange={handleChange}
                 style={{
@@ -110,7 +110,9 @@ export default function Signup() {
                   borderRadius: '0.5rem',
                   fontSize: '1rem',
                   outline: 'none',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  direction: 'ltr',
+                  textAlign: 'left'
                 }}
                 onFocus={(e) => {
                   e.target.style.borderColor = '#667eea';
@@ -126,12 +128,12 @@ export default function Signup() {
 
             <div>
               <label style={{ display: 'block', fontSize: '0.875rem', fontWeight: '500', color: '#374151', marginBottom: '0.5rem' }}>
-                Password
+                رمز عبور
               </label>
               <input
                 type="password"
                 name="password"
-                placeholder="Create a password"
+                placeholder="یک رمز عبور ایجاد کنید"
                 value={form.password}
                 onChange={handleChange}
                 style={{
@@ -141,7 +143,9 @@ export default function Signup() {
                   borderRadius: '0.5rem',
                   fontSize: '1rem',
                   outline: 'none',
-                  transition: 'all 0.2s'
+                  transition: 'all 0.2s',
+                  direction: 'ltr',
+                  textAlign: 'left'
                 }}
                 onFocus={(e) => {
                   e.target.style.borderColor = '#667eea';
@@ -215,17 +219,17 @@ export default function Signup() {
                     borderRadius: '50%',
                     animation: 'spin 1s linear infinite'
                   }}></div>
-                  Creating account...
+                  در حال ایجاد حساب...
                 </>
               ) : (
-                "Sign Up"
+                "ثبت نام"
               )}
             </button>
           </form>
 
           <div style={{ marginTop: '1.5rem', textAlign: 'center' }}>
             <p style={{ fontSize: '0.875rem', color: '#4b5563', margin: 0 }}>
-              Already have an account?{' '}
+              قبلاً حساب کاربری دارید؟{' '}
               <button
                 type="button"
                 onClick={() => navigate("/login")}
@@ -241,14 +245,14 @@ export default function Signup() {
                 onMouseEnter={(e) => e.target.style.color = '#5568d3'}
                 onMouseLeave={(e) => e.target.style.color = '#667eea'}
               >
-                Sign In
+                ورود
               </button>
             </p>
           </div>
         </div>
 
         <p style={{ textAlign: 'center', color: 'rgba(255, 255, 255, 0.9)', fontSize: '0.875rem', marginTop: '1.5rem', margin: 0 }}>
-          © 2024 CodeIQ. All rights reserved.
+          © ۱۴۰۳ CodeIQ. تمامی حقوق محفوظ است.
         </p>
       </div>
 

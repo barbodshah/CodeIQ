@@ -24,7 +24,7 @@ export default function Purchase() {
           navigate("/dashboard");
         }
       } catch (err) {
-        setError(err.response?.data?.detail || err.message || "Failed to load course");
+        setError(err.response?.data?.detail || err.message || "بارگذاری دوره با خطا مواجه شد");
       } finally {
         setLoading(false);
       }
@@ -48,7 +48,7 @@ export default function Purchase() {
         navigate("/dashboard");
       }, 2000);
     } catch (err) {
-      setPurchaseError(err.response?.data?.detail || err.message || "Failed to purchase course");
+      setPurchaseError(err.response?.data?.detail || err.message || "خرید دوره با خطا مواجه شد");
     } finally {
       setPurchasing(false);
     }
@@ -74,7 +74,7 @@ export default function Purchase() {
             animation: 'spin 1s linear infinite',
             marginBottom: '1rem'
           }}></div>
-          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>Loading course...</p>
+          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>در حال بارگذاری دوره...</p>
         </div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -114,7 +114,7 @@ export default function Purchase() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>Error</h1>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>خطا</h1>
           <p style={{ color: '#dc2626', marginBottom: '1.5rem' }}>{error}</p>
           <button
             onClick={() => navigate("/dashboard")}
@@ -130,7 +130,7 @@ export default function Purchase() {
             onMouseEnter={(e) => e.target.style.backgroundColor = '#5568d3'}
             onMouseLeave={(e) => e.target.style.backgroundColor = '#667eea'}
           >
-            Back to Dashboard
+            بازگشت به داشبورد
           </button>
         </div>
       </div>
@@ -179,10 +179,10 @@ export default function Purchase() {
                 color: '#1f2937',
                 marginBottom: '1rem'
               }}>
-                Purchase Successful!
+                خرید با موفقیت انجام شد!
               </h2>
               <p style={{ color: '#4b5563', fontSize: '1.125rem', marginBottom: '2rem' }}>
-                You now have access to "{course.title}". Redirecting to dashboard...
+                اکنون به "{course.title}" دسترسی دارید. در حال انتقال به داشبورد...
               </p>
             </div>
           ) : (
@@ -208,7 +208,7 @@ export default function Purchase() {
                 color: '#1f2937',
                 marginBottom: '1rem'
               }}>
-                Purchase Course
+                خرید دوره
               </h2>
               
               <div style={{
@@ -216,7 +216,7 @@ export default function Purchase() {
                 borderRadius: '0.75rem',
                 padding: '2rem',
                 marginBottom: '2rem',
-                textAlign: 'left'
+                textAlign: 'right'
               }}>
                 <h3 style={{
                   fontSize: '1.5rem',
@@ -242,7 +242,7 @@ export default function Purchase() {
                   borderRadius: '0.5rem',
                   padding: '1rem',
                   marginBottom: '1.5rem',
-                  textAlign: 'left'
+                  textAlign: 'right'
                 }}>
                   <p style={{ color: '#dc2626', fontSize: '0.875rem', margin: 0 }}>
                     {purchaseError}
@@ -276,7 +276,7 @@ export default function Purchase() {
                     }
                   }}
                 >
-                  Cancel
+                  لغو
                 </button>
                 
                 <button
@@ -323,10 +323,10 @@ export default function Purchase() {
                         borderRadius: '50%',
                         animation: 'spin 1s linear infinite'
                       }}></div>
-                      Processing...
+                      در حال پردازش...
                     </>
                   ) : (
-                    'Purchase Course'
+                    'خرید دوره'
                   )}
                 </button>
               </div>

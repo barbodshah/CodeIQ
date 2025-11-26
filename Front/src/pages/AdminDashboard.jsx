@@ -23,7 +23,7 @@ export default function AdminDashboard() {
       try {
         await Promise.all([fetchUsers(), fetchCourses()]);
       } catch (err) {
-        setError(err.response?.data?.detail || err.message || "Failed to load data");
+        setError(err.response?.data?.detail || err.message || "بارگذاری داده‌ها با خطا مواجه شد");
       } finally {
         setLoading(false);
       }
@@ -49,14 +49,14 @@ export default function AdminDashboard() {
     if (file) {
       // Validate file type
       if (!file.type.startsWith("image/")) {
-        alert("Please select an image file");
+        alert("لطفاً یک فایل تصویر انتخاب کنید");
         e.target.value = "";
         return;
       }
       
       // Validate file size (max 5MB)
       if (file.size > 5 * 1024 * 1024) {
-        alert("File size must be less than 5MB");
+        alert("حجم فایل باید کمتر از ۵ مگابایت باشد");
         e.target.value = "";
         return;
       }
@@ -74,7 +74,7 @@ export default function AdminDashboard() {
 
   const handleUpdateLogo = async (userId) => {
     if (!selectedFile) {
-      alert("Please select an image file");
+      alert("لطفاً یک فایل تصویر انتخاب کنید");
       return;
     }
 
@@ -82,7 +82,7 @@ export default function AdminDashboard() {
     try {
       const response = await uploadUserLogo(userId, selectedFile);
       // Show success message
-      alert("Logo uploaded successfully!");
+      alert("لوگو با موفقیت آپلود شد!");
       // Refresh users list
       await fetchUsers();
       setEditingLogo(null);
@@ -90,7 +90,7 @@ export default function AdminDashboard() {
       setFilePreview(null);
     } catch (err) {
       console.error("Upload error:", err);
-      alert(err.response?.data?.detail || err.message || "Failed to upload logo");
+      alert(err.response?.data?.detail || err.message || "آپلود لوگو با خطا مواجه شد");
     } finally {
       setUpdatingLogo(false);
     }
@@ -103,7 +103,7 @@ export default function AdminDashboard() {
       const response = await getAllUsers();
       setUsers(response.data || []);
     } catch (err) {
-      setUsersError(err.response?.data?.detail || err.message || "Failed to load users");
+      setUsersError(err.response?.data?.detail || err.message || "بارگذاری کاربران با خطا مواجه شد");
       setUsers([]);
     } finally {
       setLoadingUsers(false);
@@ -117,7 +117,7 @@ export default function AdminDashboard() {
       const response = await getAllCoursesAdmin();
       setCourses(response.data || []);
     } catch (err) {
-      setCoursesError(err.response?.data?.detail || err.message || "Failed to load courses");
+      setCoursesError(err.response?.data?.detail || err.message || "بارگذاری دوره‌ها با خطا مواجه شد");
       setCourses([]);
     } finally {
       setLoadingCourses(false);
@@ -144,7 +144,7 @@ export default function AdminDashboard() {
             animation: 'spin 1s linear infinite',
             marginBottom: '1rem'
           }}></div>
-          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>Loading...</p>
+          <p style={{ color: '#4b5563', fontSize: '1.125rem', fontWeight: '500' }}>در حال بارگذاری...</p>
         </div>
         <style>{`@keyframes spin { to { transform: rotate(360deg); } }`}</style>
       </div>
@@ -184,7 +184,7 @@ export default function AdminDashboard() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
             </svg>
           </div>
-          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>Error</h1>
+          <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>خطا</h1>
           <p style={{ color: '#dc2626', marginBottom: '1.5rem' }}>{error}</p>
           <button
             onClick={() => window.location.reload()}
@@ -200,7 +200,7 @@ export default function AdminDashboard() {
             onMouseEnter={(e) => e.target.style.backgroundColor = '#5568d3'}
             onMouseLeave={(e) => e.target.style.backgroundColor = '#667eea'}
           >
-            Retry
+            تلاش مجدد
           </button>
         </div>
       </div>
@@ -224,9 +224,9 @@ export default function AdminDashboard() {
             marginBottom: '0.5rem',
             margin: '0 0 0.5rem 0'
           }}>
-            Admin Dashboard
+            پنل مدیریت
           </h2>
-          <p style={{ color: '#4b5563', margin: 0 }}>Manage users and courses</p>
+          <p style={{ color: '#4b5563', margin: 0 }}>مدیریت کاربران و دوره‌ها</p>
         </div>
 
         {/* Tabs */}
@@ -263,7 +263,7 @@ export default function AdminDashboard() {
               }
             }}
           >
-            Users ({users.length})
+            کاربران ({users.length})
           </button>
           <button
             onClick={() => setActiveTab("courses")}
@@ -292,7 +292,7 @@ export default function AdminDashboard() {
               }
             }}
           >
-            Courses ({courses.length})
+            دوره‌ها ({courses.length})
           </button>
         </div>
 
@@ -307,7 +307,7 @@ export default function AdminDashboard() {
             <div style={{ padding: '1.5rem', borderBottom: '1px solid #e5e7eb' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
-                  All Users
+                  تمام کاربران
                 </h3>
                 <button
                   onClick={fetchUsers}
@@ -324,7 +324,7 @@ export default function AdminDashboard() {
                     opacity: loadingUsers ? 0.6 : 1
                   }}
                 >
-                  {loadingUsers ? 'Refreshing...' : 'Refresh'}
+                  {loadingUsers ? 'در حال به‌روزرسانی...' : 'به‌روزرسانی'}
                 </button>
               </div>
             </div>
@@ -341,7 +341,7 @@ export default function AdminDashboard() {
                     animation: 'spin 1s linear infinite',
                     marginRight: '1rem'
                   }}></div>
-                  <p style={{ color: '#6b7280', margin: 0 }}>Loading users...</p>
+                  <p style={{ color: '#6b7280', margin: 0 }}>در حال بارگذاری کاربران...</p>
                 </div>
               ) : usersError ? (
                 <div style={{
@@ -354,7 +354,7 @@ export default function AdminDashboard() {
                 </div>
               ) : users.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '3rem 0' }}>
-                  <p style={{ color: '#6b7280', fontSize: '1rem' }}>No users found</p>
+                  <p style={{ color: '#6b7280', fontSize: '1rem' }}>کاربری یافت نشد</p>
                 </div>
               ) : (
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
@@ -388,7 +388,7 @@ export default function AdminDashboard() {
                                 fontSize: '0.75rem',
                                 fontWeight: '600'
                               }}>
-                                Admin
+                                مدیر
                               </span>
                             )}
                           </div>
@@ -397,7 +397,7 @@ export default function AdminDashboard() {
                           </p>
                           {user.purchased_courses && user.purchased_courses.length > 0 && (
                             <p style={{ color: '#4b5563', fontSize: '0.875rem', margin: '0 0 0.75rem 0' }}>
-                              Purchased {user.purchased_courses.length} course{user.purchased_courses.length !== 1 ? 's' : ''}
+                              {user.purchased_courses.length} دوره خریداری شده
                             </p>
                           )}
                           
@@ -417,7 +417,7 @@ export default function AdminDashboard() {
                                 marginBottom: '0.5rem',
                                 margin: '0 0 0.5rem 0'
                               }}>
-                                Current Logo:
+                                لوگوی فعلی:
                               </p>
                               <img
                                 src={user.logo_url.startsWith("/uploads/") 
@@ -452,7 +452,7 @@ export default function AdminDashboard() {
                                 color: '#374151',
                                 marginBottom: '0.5rem'
                               }}>
-                                Select Image File:
+                                انتخاب فایل تصویر:
                               </label>
                               <input
                                 type="file"
@@ -483,7 +483,7 @@ export default function AdminDashboard() {
                                     marginBottom: '0.5rem',
                                     margin: '0 0 0.5rem 0'
                                   }}>
-                                    Preview:
+                                    پیش‌نمایش:
                                   </p>
                                   <img
                                     src={filePreview}
@@ -513,7 +513,7 @@ export default function AdminDashboard() {
                                     opacity: updatingLogo || !selectedFile ? 0.6 : 1
                                   }}
                                 >
-                                  {updatingLogo ? 'Uploading...' : 'Upload Logo'}
+                                  {updatingLogo ? 'در حال آپلود...' : 'آپلود لوگو'}
                                 </button>
                                 <button
                                   onClick={handleCancelEdit}
@@ -529,7 +529,7 @@ export default function AdminDashboard() {
                                     fontWeight: '500'
                                   }}
                                 >
-                                  Cancel
+                                  لغو
                                 </button>
                               </div>
                             </div>
@@ -560,7 +560,7 @@ export default function AdminDashboard() {
                               <svg style={{ width: '1rem', height: '1rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                               </svg>
-                              {user.logo_url ? 'Change Logo' : 'Set Logo'}
+                              {user.logo_url ? 'تغییر لوگو' : 'تنظیم لوگو'}
                             </button>
                           )}
                         </div>
@@ -584,7 +584,7 @@ export default function AdminDashboard() {
             <div style={{ padding: '1.5rem', borderBottom: '1px solid #e5e7eb' }}>
               <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
                 <h3 style={{ fontSize: '1.25rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>
-                  All Courses
+                  تمام دوره‌ها
                 </h3>
                 <button
                   onClick={fetchCourses}
@@ -601,7 +601,7 @@ export default function AdminDashboard() {
                     opacity: loadingCourses ? 0.6 : 1
                   }}
                 >
-                  {loadingCourses ? 'Refreshing...' : 'Refresh'}
+                  {loadingCourses ? 'در حال به‌روزرسانی...' : 'به‌روزرسانی'}
                 </button>
               </div>
             </div>
@@ -618,7 +618,7 @@ export default function AdminDashboard() {
                     animation: 'spin 1s linear infinite',
                     marginRight: '1rem'
                   }}></div>
-                  <p style={{ color: '#6b7280', margin: 0 }}>Loading courses...</p>
+                  <p style={{ color: '#6b7280', margin: 0 }}>در حال بارگذاری دوره‌ها...</p>
                 </div>
               ) : coursesError ? (
                 <div style={{
@@ -631,7 +631,7 @@ export default function AdminDashboard() {
                 </div>
               ) : courses.length === 0 ? (
                 <div style={{ textAlign: 'center', padding: '3rem 0' }}>
-                  <p style={{ color: '#6b7280', fontSize: '1rem' }}>No courses found</p>
+                  <p style={{ color: '#6b7280', fontSize: '1rem' }}>دوره‌ای یافت نشد</p>
                 </div>
               ) : (
                 <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(300px, 1fr))', gap: '1.5rem' }}>
@@ -673,7 +673,7 @@ export default function AdminDashboard() {
                             <svg style={{ width: '1rem', height: '1rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
                             </svg>
-                            <span>{course.sessions.length} session{course.sessions.length !== 1 ? 's' : ''}</span>
+                            <span>{course.sessions.length} جلسه</span>
                           </div>
                         )}
                         {course.session_ids && (
@@ -681,7 +681,7 @@ export default function AdminDashboard() {
                             <svg style={{ width: '1rem', height: '1rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
                             </svg>
-                            <span>Author ID: {course.author_id}</span>
+                            <span>شناسه نویسنده: {course.author_id}</span>
                           </div>
                         )}
                       </div>

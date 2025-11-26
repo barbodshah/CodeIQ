@@ -90,7 +90,7 @@ export default function Header() {
             }}>
               CodeIQ
             </h1>
-            <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: '0.25rem 0 0 0' }}>Your Learning Platform</p>
+            <p style={{ fontSize: '0.875rem', color: '#6b7280', margin: '0.25rem 0 0 0' }}>پلتفرم یادگیری شما</p>
           </div>
         </div>
 
@@ -121,7 +121,7 @@ export default function Header() {
               }
             }}
           >
-            Main
+            اصلی
           </Link>
           <Link
             to="/dashboard"
@@ -145,7 +145,7 @@ export default function Header() {
               }
             }}
           >
-            Dashboard
+            داشبورد
           </Link>
           <Link
             to="/contact"
@@ -169,7 +169,7 @@ export default function Header() {
               }
             }}
           >
-            Contact
+            تماس
           </Link>
           {isAdmin && (
             <Link
@@ -200,7 +200,7 @@ export default function Header() {
               <svg style={{ width: '1rem', height: '1rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z" />
               </svg>
-              Admin
+              مدیریت
             </Link>
           )}
           <button
@@ -224,7 +224,7 @@ export default function Header() {
               e.target.style.color = '#374151';
             }}
           >
-            Logout
+            خروج
           </button>
         </nav>
       </div>
