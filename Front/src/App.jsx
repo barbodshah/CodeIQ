@@ -6,6 +6,8 @@ import Main from "./pages/Main";
 import Dashboard from "./pages/Dashboard";
 import Contact from "./pages/Contact";
 import Session from "./pages/Session";
+import Purchase from "./pages/Purchase";
+import AdminDashboard from "./pages/AdminDashboard";
 import ProtectedRoute from "./components/ProtectedRoute";
 
 export default function App() {
@@ -47,6 +49,24 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Session />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/purchase/:courseId"
+          element={
+            <ProtectedRoute>
+              <Purchase />
+            </ProtectedRoute>
+          }
+        />
+
+        <Route
+          path="/admin"
+          element={
+            <ProtectedRoute>
+              <AdminDashboard />
             </ProtectedRoute>
           }
         />

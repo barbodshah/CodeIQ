@@ -181,22 +181,43 @@ export default function Session() {
           </div>
           <h1 style={{ fontSize: '1.5rem', fontWeight: 'bold', color: '#1f2937', marginBottom: '0.5rem' }}>Error</h1>
           <p style={{ color: '#dc2626', marginBottom: '1.5rem' }}>{error}</p>
-          <button
-            onClick={() => navigate("/dashboard")}
-            style={{
-              padding: '0.5rem 1.5rem',
-              backgroundColor: '#667eea',
-              color: 'white',
-              borderRadius: '0.5rem',
-              border: 'none',
-              cursor: 'pointer',
-              fontWeight: '500'
-            }}
-            onMouseEnter={(e) => e.target.style.backgroundColor = '#5568d3'}
-            onMouseLeave={(e) => e.target.style.backgroundColor = '#667eea'}
-          >
-            Back to Dashboard
-          </button>
+          {error.includes("purchase") || error.includes("need to purchase") ? (
+            <div style={{ display: 'flex', gap: '1rem', justifyContent: 'center' }}>
+              <button
+                onClick={() => navigate("/dashboard")}
+                style={{
+                  padding: '0.5rem 1.5rem',
+                  backgroundColor: '#e5e7eb',
+                  color: '#374151',
+                  borderRadius: '0.5rem',
+                  border: 'none',
+                  cursor: 'pointer',
+                  fontWeight: '500'
+                }}
+                onMouseEnter={(e) => e.target.style.backgroundColor = '#d1d5db'}
+                onMouseLeave={(e) => e.target.style.backgroundColor = '#e5e7eb'}
+              >
+                Back to Dashboard
+              </button>
+            </div>
+          ) : (
+            <button
+              onClick={() => navigate("/dashboard")}
+              style={{
+                padding: '0.5rem 1.5rem',
+                backgroundColor: '#667eea',
+                color: 'white',
+                borderRadius: '0.5rem',
+                border: 'none',
+                cursor: 'pointer',
+                fontWeight: '500'
+              }}
+              onMouseEnter={(e) => e.target.style.backgroundColor = '#5568d3'}
+              onMouseLeave={(e) => e.target.style.backgroundColor = '#667eea'}
+            >
+              Back to Dashboard
+            </button>
+          )}
         </div>
       </div>
     );

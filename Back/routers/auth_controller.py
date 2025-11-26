@@ -1,7 +1,7 @@
-from fastapi import APIRouter, HTTPException, status
+from fastapi import APIRouter, HTTPException, status, Depends, Header
 from fastapi.responses import JSONResponse
 from models.user_model import User, UserLogin
-from utils.auth_utils import hash_password, verify_password, create_access_token
+from utils.auth_utils import hash_password, verify_password, create_access_token, decode_token
 from motor.motor_asyncio import AsyncIOMotorClient
 import os
 
@@ -32,4 +32,35 @@ async def login(credentials: UserLogin):
         raise HTTPException(status_code=status.HTTP_401_UNAUTHORIZED, detail="Invalid credentials")
 
     token = create_access_token({"sub": user["email"]})
-    return JSONResponse({"access_token": token, "token_type": "bearer"})
+    is_admin = user.get("is_admin", False)
+    return JSONResponse({
+        "access_token": token, 
+        "token_type": "bearer",
+        "is_admin": is_admin
+    })
+
+
+async def get_current_user_email(authorization: str = Header(None)):
+    if not authorization:
+        raise HTTPException(status_code=401, detail="Authorization header missing")
+    
+    try:
+        token = authorization.split(" ")[1]  # Remove "Bearer " prefix
+        email = decode_token(token)
+        if not email:
+            raise HTTPException(status_code=401, detail="Invalid token")
+        return email
+    except IndexError:
+        raise HTTPException(status_code=401, detail="Invalid authorization header format")
+
+
+@router.get("/me")
+async def get_current_user(email: str = Depends(get_current_user_email)):
+    user = await users.find_one({"email": email})
+    if not user:
+        raise HTTPException(status_code=404, detail="User not found")
+    
+    # Remove password from response
+    user["_id"] = str(user["_id"])
+    user.pop("password", None)
+    return JSONResponse(user)

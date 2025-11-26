@@ -14,9 +14,11 @@ API.interceptors.request.use((config) => {
 
 export const signupUser = (data) => API.post("/auth/signup", data);
 export const loginUser = (data) => API.post("/auth/login", data);
+export const getCurrentUser = () => API.get("/auth/me");
 
 // Course APIs
 export const getAllCourses = () => API.get("/courses");
+export const getCourseById = (courseId) => API.get(`/courses/${courseId}`);
 export const getCourseSessions = (courseId) => API.get(`/courses/${courseId}/sessions`);
 
 // Session APIs
@@ -34,3 +36,22 @@ export const submitCode = (questionId, sourceCode, languageId = 71) =>
 
 // Contact APIs
 export const sendContactEmail = (data) => API.post("/contact/send", data);
+
+// Purchase APIs
+export const purchaseCourse = (courseId) => API.post(`/purchase/${courseId}`);
+export const getMyCourses = () => API.get("/purchase/my-courses");
+export const checkCourseAccess = (courseId) => API.get(`/purchase/check-access/${courseId}`);
+
+// Admin APIs
+export const getAllUsers = () => API.get("/admin/users");
+export const getAllCoursesAdmin = () => API.get("/admin/courses");
+export const updateUserLogo = (userId, logoUrl) => API.put(`/admin/users/${userId}/logo`, { logo_url: logoUrl });
+export const uploadUserLogo = (userId, file) => {
+  const formData = new FormData();
+  formData.append("file", file);
+  return API.post(`/admin/users/${userId}/logo/upload`, formData, {
+    headers: {
+      "Content-Type": "multipart/form-data",
+    },
+  });
+};

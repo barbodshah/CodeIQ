@@ -21,7 +21,18 @@ export default function Login() {
     try {
       const res = await loginUser(form);
       localStorage.setItem("token", res.data.access_token);
-      navigate("/main");
+      // Store admin status
+      if (res.data.is_admin) {
+        localStorage.setItem("is_admin", "true");
+      } else {
+        localStorage.removeItem("is_admin");
+      }
+      // Redirect admin to admin dashboard, regular users to main
+      if (res.data.is_admin) {
+        navigate("/admin");
+      } else {
+        navigate("/main");
+      }
     } catch (err) {
       setError(err.response?.data?.detail || "Invalid email or password");
     } finally {

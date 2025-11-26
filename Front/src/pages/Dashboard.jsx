@@ -277,125 +277,197 @@ export default function Dashboard() {
                       backgroundColor: '#f9fafb'
                     }}>
                       <div style={{ padding: '1.5rem' }}>
-                        <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                        {course.is_purchased ? (
+                          <>
+                            <div style={{ display: 'flex', alignItems: 'center', marginBottom: '1rem' }}>
+                              <div style={{
+                                height: '4px',
+                                width: '3rem',
+                                backgroundColor: '#667eea',
+                                borderRadius: '9999px',
+                                marginRight: '0.75rem'
+                              }}></div>
+                              <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>Sessions</h4>
+                            </div>
+                            
+                            {loadingSessions ? (
+                              <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 0' }}>
+                                <div style={{
+                                  width: '1.5rem',
+                                  height: '1.5rem',
+                                  border: '2px solid #e5e7eb',
+                                  borderTop: '2px solid #667eea',
+                                  borderRadius: '50%',
+                                  animation: 'spin 1s linear infinite',
+                                  marginRight: '0.75rem'
+                                }}></div>
+                                <p style={{ color: '#6b7280', margin: 0 }}>Loading sessions...</p>
+                              </div>
+                            ) : sessionsError ? (
+                              <div style={{
+                                backgroundColor: '#fef2f2',
+                                border: '1px solid #fecaca',
+                                borderRadius: '0.5rem',
+                                padding: '1rem'
+                              }}>
+                                <p style={{ color: '#dc2626', fontSize: '0.875rem', margin: 0 }}>{sessionsError}</p>
+                              </div>
+                            ) : sessions.length === 0 ? (
+                              <div style={{
+                                backgroundColor: '#f9fafb',
+                                borderRadius: '0.5rem',
+                                padding: '1rem',
+                                textAlign: 'center'
+                              }}>
+                                <p style={{ color: '#6b7280', fontSize: '0.875rem', margin: 0 }}>No sessions available for this course</p>
+                              </div>
+                            ) : (
+                              <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
+                                {sessions.map((session, index) => (
+                                  <div
+                                    key={session._id}
+                                    onClick={() => navigate(`/session/${session._id}`)}
+                                    style={{
+                                      backgroundColor: 'white',
+                                      border: '1px solid #e5e7eb',
+                                      borderRadius: '0.75rem',
+                                      padding: '1rem',
+                                      transition: 'all 0.2s',
+                                      cursor: 'pointer'
+                                    }}
+                                    onMouseEnter={(e) => {
+                                      e.currentTarget.style.borderColor = '#a5b4fc';
+                                      e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                                      e.currentTarget.style.transform = 'translateY(-2px)';
+                                    }}
+                                    onMouseLeave={(e) => {
+                                      e.currentTarget.style.borderColor = '#e5e7eb';
+                                      e.currentTarget.style.boxShadow = 'none';
+                                      e.currentTarget.style.transform = 'translateY(0)';
+                                    }}
+                                  >
+                                    <div style={{ display: 'flex', alignItems: 'flex-start' }}>
+                                      <div style={{
+                                        flexShrink: 0,
+                                        width: '2rem',
+                                        height: '2rem',
+                                        borderRadius: '0.5rem',
+                                        background: 'linear-gradient(to bottom right, #667eea, #764ba2)',
+                                        display: 'flex',
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                        color: 'white',
+                                        fontSize: '0.875rem',
+                                        fontWeight: 'bold',
+                                        marginRight: '0.75rem'
+                                      }}>
+                                        {index + 1}
+                                      </div>
+                                      <div style={{ flex: 1, minWidth: 0 }}>
+                                        <h5 style={{
+                                          fontWeight: '600',
+                                          color: '#1f2937',
+                                          marginBottom: '0.25rem',
+                                          margin: '0 0 0.25rem 0'
+                                        }}>
+                                          {session.title}
+                                        </h5>
+                                        {session.description && (
+                                          <p style={{
+                                            fontSize: '0.875rem',
+                                            color: '#4b5563',
+                                            marginBottom: '0.5rem',
+                                            overflow: 'hidden',
+                                            display: '-webkit-box',
+                                            WebkitLineClamp: 2,
+                                            WebkitBoxOrient: 'vertical',
+                                            margin: '0 0 0.5rem 0'
+                                          }}>
+                                            {session.description}
+                                          </p>
+                                        )}
+                                        {session.sections && session.sections.length > 0 && (
+                                          <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.75rem', color: '#6b7280' }}>
+                                            <svg style={{ width: '1rem', height: '1rem', marginRight: '0.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
+                                            </svg>
+                                            <span>{session.sections.length} section{session.sections.length !== 1 ? 's' : ''}</span>
+                                          </div>
+                                        )}
+                                      </div>
+                                    </div>
+                                  </div>
+                                ))}
+                              </div>
+                            )}
+                          </>
+                        ) : (
                           <div style={{
-                            height: '4px',
-                            width: '3rem',
-                            backgroundColor: '#667eea',
-                            borderRadius: '9999px',
-                            marginRight: '0.75rem'
-                          }}></div>
-                          <h4 style={{ fontSize: '1.125rem', fontWeight: '600', color: '#1f2937', margin: 0 }}>Sessions</h4>
-                        </div>
-                        
-                        {loadingSessions ? (
-                          <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '2rem 0' }}>
-                            <div style={{
-                              width: '1.5rem',
-                              height: '1.5rem',
-                              border: '2px solid #e5e7eb',
-                              borderTop: '2px solid #667eea',
-                              borderRadius: '50%',
-                              animation: 'spin 1s linear infinite',
-                              marginRight: '0.75rem'
-                            }}></div>
-                            <p style={{ color: '#6b7280', margin: 0 }}>Loading sessions...</p>
-                          </div>
-                        ) : sessionsError ? (
-                          <div style={{
-                            backgroundColor: '#fef2f2',
-                            border: '1px solid #fecaca',
-                            borderRadius: '0.5rem',
-                            padding: '1rem'
-                          }}>
-                            <p style={{ color: '#dc2626', fontSize: '0.875rem', margin: 0 }}>{sessionsError}</p>
-                          </div>
-                        ) : sessions.length === 0 ? (
-                          <div style={{
-                            backgroundColor: '#f9fafb',
-                            borderRadius: '0.5rem',
-                            padding: '1rem',
+                            backgroundColor: '#fef3c7',
+                            border: '1px solid #fcd34d',
+                            borderRadius: '0.75rem',
+                            padding: '1.5rem',
                             textAlign: 'center'
                           }}>
-                            <p style={{ color: '#6b7280', fontSize: '0.875rem', margin: 0 }}>No sessions available for this course</p>
-                          </div>
-                        ) : (
-                          <div style={{ display: 'flex', flexDirection: 'column', gap: '0.75rem' }}>
-                            {sessions.map((session, index) => (
-                              <div
-                                key={session._id}
-                                onClick={() => navigate(`/session/${session._id}`)}
-                                style={{
-                                  backgroundColor: 'white',
-                                  border: '1px solid #e5e7eb',
-                                  borderRadius: '0.75rem',
-                                  padding: '1rem',
-                                  transition: 'all 0.2s',
-                                  cursor: 'pointer'
-                                }}
-                                onMouseEnter={(e) => {
-                                  e.currentTarget.style.borderColor = '#a5b4fc';
-                                  e.currentTarget.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
-                                  e.currentTarget.style.transform = 'translateY(-2px)';
-                                }}
-                                onMouseLeave={(e) => {
-                                  e.currentTarget.style.borderColor = '#e5e7eb';
-                                  e.currentTarget.style.boxShadow = 'none';
-                                  e.currentTarget.style.transform = 'translateY(0)';
-                                }}
-                              >
-                                <div style={{ display: 'flex', alignItems: 'flex-start' }}>
-                                  <div style={{
-                                    flexShrink: 0,
-                                    width: '2rem',
-                                    height: '2rem',
-                                    borderRadius: '0.5rem',
-                                    background: 'linear-gradient(to bottom right, #667eea, #764ba2)',
-                                    display: 'flex',
-                                    alignItems: 'center',
-                                    justifyContent: 'center',
-                                    color: 'white',
-                                    fontSize: '0.875rem',
-                                    fontWeight: 'bold',
-                                    marginRight: '0.75rem'
-                                  }}>
-                                    {index + 1}
-                                  </div>
-                                  <div style={{ flex: 1, minWidth: 0 }}>
-                                    <h5 style={{
-                                      fontWeight: '600',
-                                      color: '#1f2937',
-                                      marginBottom: '0.25rem',
-                                      margin: '0 0 0.25rem 0'
-                                    }}>
-                                      {session.title}
-                                    </h5>
-                                    {session.description && (
-                                      <p style={{
-                                        fontSize: '0.875rem',
-                                        color: '#4b5563',
-                                        marginBottom: '0.5rem',
-                                        overflow: 'hidden',
-                                        display: '-webkit-box',
-                                        WebkitLineClamp: 2,
-                                        WebkitBoxOrient: 'vertical',
-                                        margin: '0 0 0.5rem 0'
-                                      }}>
-                                        {session.description}
-                                      </p>
-                                    )}
-                                    {session.sections && session.sections.length > 0 && (
-                                      <div style={{ display: 'flex', alignItems: 'center', fontSize: '0.75rem', color: '#6b7280' }}>
-                                        <svg style={{ width: '1rem', height: '1rem', marginRight: '0.25rem' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" />
-                                        </svg>
-                                        <span>{session.sections.length} section{session.sections.length !== 1 ? 's' : ''}</span>
-                                      </div>
-                                    )}
-                                  </div>
-                                </div>
-                              </div>
-                            ))}
+                            <div style={{
+                              display: 'inline-flex',
+                              alignItems: 'center',
+                              justifyContent: 'center',
+                              width: '3rem',
+                              height: '3rem',
+                              borderRadius: '50%',
+                              backgroundColor: '#fbbf24',
+                              marginBottom: '1rem'
+                            }}>
+                              <svg style={{ width: '1.5rem', height: '1.5rem', color: 'white' }} fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                              </svg>
+                            </div>
+                            <h4 style={{
+                              fontSize: '1.125rem',
+                              fontWeight: '600',
+                              color: '#92400e',
+                              marginBottom: '0.5rem'
+                            }}>
+                              Course Not Purchased
+                            </h4>
+                            <p style={{
+                              color: '#78350f',
+                              fontSize: '0.875rem',
+                              marginBottom: '1.5rem'
+                            }}>
+                              You need to purchase this course to access its sessions.
+                            </p>
+                            <button
+                              onClick={(e) => {
+                                e.stopPropagation();
+                                navigate(`/purchase/${course._id}`);
+                              }}
+                              style={{
+                                padding: '0.75rem 2rem',
+                                background: 'linear-gradient(to right, #667eea, #764ba2)',
+                                color: 'white',
+                                borderRadius: '0.5rem',
+                                border: 'none',
+                                cursor: 'pointer',
+                                fontWeight: '600',
+                                fontSize: '1rem',
+                                boxShadow: '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)',
+                                transition: 'all 0.2s'
+                              }}
+                              onMouseEnter={(e) => {
+                                e.target.style.opacity = '0.9';
+                                e.target.style.transform = 'translateY(-1px)';
+                                e.target.style.boxShadow = '0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05)';
+                              }}
+                              onMouseLeave={(e) => {
+                                e.target.style.opacity = '1';
+                                e.target.style.transform = 'translateY(0)';
+                                e.target.style.boxShadow = '0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06)';
+                              }}
+                            >
+                              Purchase Course
+                            </button>
                           </div>
                         )}
                       </div>
