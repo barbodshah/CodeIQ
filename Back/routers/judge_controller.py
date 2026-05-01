@@ -1,9 +1,9 @@
 from fastapi import APIRouter, HTTPException
 from fastapi.responses import JSONResponse
 from bson import ObjectId
-import httpx
 import os
 from motor.motor_asyncio import AsyncIOMotorClient
+from services.local_executor import run_python_testcase
 
 router = APIRouter(prefix="/judge", tags=["judge"])
 
@@ -11,9 +11,6 @@ MONGO_URI = os.getenv("MONGO_URI", "mongodb://localhost:27017")
 client = AsyncIOMotorClient(MONGO_URI)
 db = client["codeiq_db"]
 questions = db["questions"]
-
-JUDGE0_URL = "https://ce.judge0.com"
-
 
 # -------------------------
 # Get a question by ID
@@ -46,43 +43,32 @@ async def submit_code(question_id: str, payload: dict):
         raise HTTPException(status_code=404, detail="Question not found")
 
     testcases = question["testcases"]
-    source_code = payload["source_code"]
-    language_id = payload["language_id"]
+    source_code = payload.get("source_code", "")
+    language_id = payload.get("language_id", 71)
+
+    if not source_code.strip():
+        raise HTTPException(status_code=400, detail="source_code is required")
+
+    # Phase 1 supports Python only to stay aligned with current frontend behavior.
+    if language_id != 71:
+        raise HTTPException(status_code=400, detail="Only Python (language_id=71) is supported")
 
     results = []
 
-    async with httpx.AsyncClient() as client:
-        for tc in testcases:
+    for tc in testcases:
+        execution_result = await run_python_testcase(
+            source_code=source_code,
+            stdin_data=tc.get("input", ""),
+            expected_output=tc.get("expected_output", ""),
+        )
 
-            req = {
-                "source_code": source_code,
-                "language_id": language_id,
-                "stdin": tc["input"],
-                "expected_output": tc["expected_output"]
-            }
-
-            # Send to Judge0
-            response = await client.post(
-                f"{JUDGE0_URL}/submissions?wait=true&base64_encoded=false",
-                json=req,
-                timeout=20
-            )
-
-            if response.status_code not in (200, 201):
-                return JSONResponse({
-                    "judge0_status": response.status_code,
-                    "judge0_body": response.text
-                }, status_code=500)
-
-            judge_out = response.json()
-
-            results.append({
-                "input": tc["input"],
-                "expected": tc["expected_output"],
-                "stdout": judge_out.get("stdout"),
-                "stderr": judge_out.get("stderr"),
-                "status": judge_out.get("status"),
-            })
+        results.append({
+            "input": tc.get("input", ""),
+            "expected": tc.get("expected_output", ""),
+            "stdout": execution_result.stdout,
+            "stderr": execution_result.stderr,
+            "status": execution_result.status,
+        })
 
     # Compute final verdict
     all_passed = all(r["status"]["id"] == 3 for r in results)
